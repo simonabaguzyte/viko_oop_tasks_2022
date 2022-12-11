@@ -2,6 +2,20 @@ import datetime
 
 class Person:
    def __init__(self, first_name, last_name, year, month, day):
+
+      if first_name == None or first_name.strip() == "":
+         raise ValueError("First name must not be null or whitespace")
+      if last_name == None or last_name.strip() == "":
+         raise ValueError("Last name must not be null or whitespace")
+
+      date_of_birth = datetime.date(
+         year=int(year),
+         month=int(month),
+         day=int(day)
+      )
+      if date_of_birth > datetime.date.today():
+         raise ValueError("Date of birth cannot be later than today's date")
+
       self.first_name = first_name
       self.last_name = last_name
       self.birth_year = int(year)
@@ -36,20 +50,8 @@ class Person:
       has_birthday_passed = today > next_birthday 
       if has_birthday_passed:
          next_birthday = next_birthday.replace(year=today.year + 1)
-         
+  
       return (next_birthday - today).days
 
    def personal_info(self):
       return f"{self.first_name} {self.last_name}, age {self.age()} years"
-
-
-person1 = Person("Laura", "Harris", "1986", "12", "01")
-print(person1.first_name)
-print(person1.last_name)
-print(person1.birth_year)
-print(person1.birth_month)
-print(person1.birth_day)
-print(person1.age())
-print(person1.days_until_birthday())
-print(person1.personal_info())
-
