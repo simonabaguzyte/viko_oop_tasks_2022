@@ -1,26 +1,18 @@
 import datetime
 
 class Person:
-   def __init__(self, first_name, last_name, year, month, day):
+   def __init__(self, first_name, last_name, date_of_birth):
+      self.validate_first_name(first_name)
+      self.validate_last_name(last_name)
 
-      if first_name == None or first_name.strip() == "":
-         raise ValueError("First name must not be null or whitespace")
-      if last_name == None or last_name.strip() == "":
-         raise ValueError("Last name must not be null or whitespace")
-
-      date_of_birth = datetime.date(
-         year=int(year),
-         month=int(month),
-         day=int(day)
-      )
-      if date_of_birth > datetime.date.today():
-         raise ValueError("Date of birth cannot be later than today's date")
-
+      date_of_birth = datetime.datetime.strptime(date_of_birth, "%Y-%m-%d")
+      self.validate_date_of_birth(date_of_birth)
+      
       self.first_name = first_name
       self.last_name = last_name
-      self.birth_year = int(year)
-      self.birth_month = int(month)
-      self.birth_day = int(day)
+      self.birth_year = int(date_of_birth.year)
+      self.birth_month = int(date_of_birth.year)
+      self.birth_day = int(date_of_birth.year)
 
    def age(self):
       today = datetime.date.today()
@@ -55,3 +47,17 @@ class Person:
 
    def personal_info(self):
       return f"{self.first_name} {self.last_name}, age {self.age()} years"
+
+   def validate_first_name(self, first_name):
+      if first_name == None or first_name.strip() == "":
+         raise ValueError("First name must not be null or whitespace")
+
+   def validate_last_name(self, last_name):
+      if last_name == None or last_name.strip() == "":
+         raise ValueError("Last name must not be null or whitespace")
+         
+   def validate_date_of_birth(self, date_of_birth):
+      if date_of_birth.date() > datetime.date.today():
+         raise ValueError("Date of birth cannot be later than today's date")
+
+
