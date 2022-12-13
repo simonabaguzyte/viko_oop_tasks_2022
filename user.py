@@ -1,14 +1,16 @@
-class User:
-   def __init__(self, person, username, password):
-      self.validate_age(person)
+from person import Person
 
-      self.person = person
+class User(Person):
+   def __init__(self, first_name, last_name, date_of_birth, username, password):
+      super().__init__(first_name, last_name, date_of_birth)
+
+      self.validate_age()
       self.username = username
       self.password = password
       self.picture = None
 
-   def validate_age(self, person):
-      if person.age() < 14:
+   def validate_age(self):
+      if self.age() < 14:
          raise ValueError("User's age cannot be less than 14")
 
    def update_password(self, old_password, new_password):
